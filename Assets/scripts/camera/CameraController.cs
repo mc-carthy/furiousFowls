@@ -34,6 +34,8 @@ public class CameraController : MonoBehaviour {
 			}
 		}
 
+
+
 		if (slingshot.state == SlingshotState.Idle && GameController.state == GameState.Playing) {
 			if (Input.GetMouseButtonDown (0)) {
 				timeDragStart = Time.time;

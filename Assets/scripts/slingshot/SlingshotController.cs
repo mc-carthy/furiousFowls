@@ -29,7 +29,9 @@ public class SlingshotController : MonoBehaviour {
 
 		state = SlingshotState.Idle;
 		slingshotLineRenderer0.SetPosition (0, leftOrigin.position);
-		slingshotLineRenderer0.SetPosition (0, rightOrigin.position);
+		slingshotLineRenderer1.SetPosition (0, rightOrigin.position);
+		slingshotLineRenderer0.enabled = false;
+		slingshotLineRenderer1.enabled = false;
 		slingshotMiddleVector = new Vector3 (
 											(leftOrigin.position.x + rightOrigin.position.x) / 2, 
 											(leftOrigin.position.y + rightOrigin.position.y) / 2, 

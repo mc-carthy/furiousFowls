@@ -98,7 +98,13 @@ public class GameController : MonoBehaviour {
 			duration = 0.1f;
 		}
 
+		/*
 		Camera.main.transform.position = Vector2.MoveTowards (Camera.main.transform.position, myCam.startPos, cameraMovementSpeed);
+		Vector3 temp = Camera.main.transform.position;
+		temp.z = -10;
+		Camera.main.transform.position = temp;
+		*/
+		Camera.main.transform.position = myCam.startPos;
 		myCam.isFollowing = false;
 		if (AllPigsAreDead ()) {
 			state = GameState.Won;
