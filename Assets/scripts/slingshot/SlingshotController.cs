@@ -13,6 +13,9 @@ public class SlingshotController : MonoBehaviour {
 	public Transform leftOrigin, rightOrigin, birdWaitPos;
 	public LineRenderer slingshotLineRenderer0, slingshotLineRenderer1, trajectoryLineRenderer;
 	public float throwSpeed;
+	public float maxDrawDistance = 1.5f;
+	public float minReleaseThreshold = 1f;
+	public float returnToSlingshotSpeed = 0.5f;
 
 	public delegate void BirdThrown ();
 	public event BirdThrown birdThrown;
@@ -32,6 +35,65 @@ public class SlingshotController : MonoBehaviour {
 											(leftOrigin.position.y + rightOrigin.position.y) / 2, 
 											transform.position.z
 		); 
+	}
+
+	private void Update () {
+		switch (state) {
+		case SlingshotState.Idle:
+			InitializeBird ();
+			DisplaySlingshotLineRenderers ();
+
+			if (Input.GetMouseButtonDown (0)) {
+				Vector3 location = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+
+				if (birdToThrow.GetComponent<CircleCollider2D> () == Physics2D.OverlapPoint (location)) {
+					state = SlingshotState.UserPulling;
+				}
+			}
+
+			break;
+
+		case SlingshotState.UserPulling:
+			DisplaySlingshotLineRenderers ();
+
+			if (Input.GetMouseButton (0)) {
+				Vector3 location = Camera.main.ScreenToWorldPoint (Input.mousePosition); 
+				location.z = 0;
+
+				if (Vector3.Distance (location, slingshotMiddleVector) > maxDrawDistance) {
+					Vector3 maxPosition = (location - slingshotMiddleVector).normalized * maxDrawDistance + slingshotMiddleVector;
+					birdToThrow.transform.position = maxPosition;
+				} else {
+					birdToThrow.transform.position = location;
+				}
+
+				float distance = Vector3.Distance (slingshotMiddleVector, birdToThrow.transform.position);
+				DisplayTrajectoryLineRenderer (distance);
+
+			} else {
+
+				SetTrajectoryLineRendererActive (true);
+				timeSinceThrow = Time.time;
+
+				float distance = Vector3.Distance (slingshotMiddleVector, birdToThrow.transform.position);
+
+				if (distance > minReleaseThreshold) {
+					SetSlingshotLineRendererActive (false);
+					state = SlingshotState.BirdFlying;
+					ThrowBird (distance);
+				} else {
+					birdToThrow.transform.position = Vector2.MoveTowards (birdToThrow.transform.position, birdWaitPos.position, returnToSlingshotSpeed);
+					InitializeBird ();
+				}
+
+			}
+
+			break;
+
+		case SlingshotState.BirdFlying:
+
+			break;
+		}
 	}
 
 	private void InitializeBird () {
@@ -67,7 +129,7 @@ public class SlingshotController : MonoBehaviour {
 
 		for (int i = 1; i < segmentCount; i++) {
 			float time = i * Time.fixedDeltaTime * 5; // Replace hardcoded value
-			segments[i] = segments * segVel * time + 0.5f * Physics2D.gravity * Mathf.Pow(time, 2);
+			segments[i] = segments[0] + segVel * time + 0.5f * Physics2D.gravity * Mathf.Pow(time, 2);
 		}
 
 		trajectoryLineRenderer.SetVertexCount (segmentCount);
