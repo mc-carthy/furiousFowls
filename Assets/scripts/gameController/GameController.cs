@@ -97,14 +97,16 @@ public class GameController : MonoBehaviour {
 		if (duration == 0.0f) {
 			duration = 0.1f;
 		}
-
-
+		print ("GameController Update 101");
 		Camera.main.transform.position = Vector2.MoveTowards (Camera.main.transform.position, myCam.startPos, cameraMovementSpeed);
 		Vector3 temp = Camera.main.transform.position;
 		temp.z = -10;
+		print ("GameController Update 105");
 		Camera.main.transform.position = temp;
 
+		print ("GameController Update 108");
 		Camera.main.transform.position = myCam.startPos;
+
 		myCam.isFollowing = false;
 		if (AllPigsAreDead ()) {
 			state = GameState.Won;

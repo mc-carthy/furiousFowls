@@ -7,12 +7,12 @@ public class ParallaxController : MonoBehaviour {
 
 	private Vector3 previousPosition;
 
-	private void Awake () {
+	private void Start () {
 		previousPosition = Camera.main.transform.position;
 	}
 
 	private void Update () {
-		Vector3 delta = Camera.main.transform.position = previousPosition;
+		Vector3 delta = Camera.main.transform.position - previousPosition;
 		delta.y = 0f;
 		delta.z = 0f;
 		transform.position += delta / parallaxFactor;

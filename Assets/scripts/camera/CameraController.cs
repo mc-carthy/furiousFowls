@@ -28,13 +28,12 @@ public class CameraController : MonoBehaviour {
 			if (birdToFollow != null) {
 				Vector3 birdPos = birdToFollow.position;
 				float x = Mathf.Clamp (birdPos.x, minX, maxX);
+				print ("CameraController Update 31");
 				transform.position = new Vector3 (x, startPos.y, startPos.z);
 			} else {
 				isFollowing = false;
 			}
 		}
-
-
 
 		if (slingshot.state == SlingshotState.Idle && GameController.state == GameState.Playing) {
 			if (Input.GetMouseButtonDown (0)) {
@@ -43,7 +42,7 @@ public class CameraController : MonoBehaviour {
 				previousPosition = Input.mousePosition;
 			}
 		// TODO - Remove hardcoded value
-		} else if (Input.GetMouseButton (0) && Time.time - timeDragStart > 0.005f && slingshot.state != SlingshotState.UserPulling) {
+		} else if (Input.GetMouseButton (0) && Time.time - timeDragStart > 0.005f && slingshot.state == SlingshotState.Idle) {
 			Vector3 input = Input.mousePosition;
 			float deltaX = (previousPosition.x - input.x) * dragSpeed;
 			float deltaY = (previousPosition.y - input.y) * dragSpeed;
@@ -51,6 +50,7 @@ public class CameraController : MonoBehaviour {
 			float newX = Mathf.Clamp (transform.position.x + deltaX, minX, maxX);
 			float newY = Mathf.Clamp (transform.position.y + deltaY, minY, maxY);
 
+			print ("CameraController Update 54\t");
 			transform.position = new Vector3 (newX, newY, transform.position.z);
 
 			previousPosition = input;

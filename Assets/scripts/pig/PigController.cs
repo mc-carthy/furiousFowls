@@ -16,16 +16,12 @@ public class PigController : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter2D (Collision2D col) {
-		print ("Colliding");
 		if (col.gameObject.GetComponent<Rigidbody2D> () != null) {
-			print ("Hit by rigidbody");
 			if (col.gameObject.tag == "bird") {
 				source.Play ();
 				Destroy (gameObject);
 			} else {
-				print ("Taking damage");
 				float damage = col.gameObject.GetComponent<Rigidbody2D> ().velocity.magnitude * damageMultiplier;
-				print (damage);
 				if (damage >= 10) {
 					source.Play ();
 				}
