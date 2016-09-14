@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour {
 				previousPosition = Input.mousePosition;
 			}
 		// TODO - Remove hardcoded value
-		} else if (Input.GetMouseButton (0) && Time.time - timeDragStart > 0.005f) {
+		} else if (Input.GetMouseButton (0) && Time.time - timeDragStart > 0.005f && slingshot.state != SlingshotState.UserPulling) {
 			Vector3 input = Input.mousePosition;
 			float deltaX = (previousPosition.x - input.x) * dragSpeed;
 			float deltaY = (previousPosition.y - input.y) * dragSpeed;

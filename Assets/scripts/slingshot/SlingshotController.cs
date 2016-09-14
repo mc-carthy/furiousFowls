@@ -107,6 +107,8 @@ public class SlingshotController : MonoBehaviour {
 	private void SetSlingshotLineRendererActive (bool active) {
 		slingshotLineRenderer0.enabled = true;
 		slingshotLineRenderer1.enabled = true;
+		slingshotLineRenderer0.sortingLayerName = "foreground";
+		slingshotLineRenderer1.sortingLayerName = "foreground";
 	}
 
 	private void DisplaySlingshotLineRenderers () {

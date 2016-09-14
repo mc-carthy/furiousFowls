@@ -16,7 +16,7 @@ public class BrickController : MonoBehaviour {
 		if (col.gameObject.GetComponent<Rigidbody2D> () != null) {
 			float projectileVelocity = col.gameObject.GetComponent<Rigidbody2D> ().velocity.magnitude;
 			float damage = projectileVelocity * damageMultiplier;
-			if (damage > 15f) {
+			if (damage > 5f) {
 				source.Play ();
 			}
 			health -= damage;
