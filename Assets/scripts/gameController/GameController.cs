@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour {
 	public CameraController myCam;
 	public SlingshotController slingshot;
 
-	private int currentBirdIndex;
+	private int currentBirdIndex = 0;
 	private float cameraMovementSpeed = 10f;
 	private List<GameObject> bricks;
 	private List<GameObject> birds;
@@ -98,12 +98,12 @@ public class GameController : MonoBehaviour {
 			duration = 0.1f;
 		}
 
-		/*
+
 		Camera.main.transform.position = Vector2.MoveTowards (Camera.main.transform.position, myCam.startPos, cameraMovementSpeed);
 		Vector3 temp = Camera.main.transform.position;
 		temp.z = -10;
 		Camera.main.transform.position = temp;
-		*/
+
 		Camera.main.transform.position = myCam.startPos;
 		myCam.isFollowing = false;
 		if (AllPigsAreDead ()) {

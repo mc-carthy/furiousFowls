@@ -15,7 +15,7 @@ public class SlingshotController : MonoBehaviour {
 	public float throwSpeed;
 	public float maxDrawDistance = 1.5f;
 	public float minReleaseThreshold = 1f;
-	public float returnToSlingshotSpeed = 0.5f;
+	public float returnToSlingshotSpeed = 0.05f;
 
 	public delegate void BirdThrown ();
 	public event BirdThrown birdThrown;
