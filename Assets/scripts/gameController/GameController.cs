@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour {
 	[HideInInspector]
 	public static GameState state;
 
-	public CameraController camera;
+	public CameraController myCam;
 	public SlingshotController slingshot;
 
 	private int currentBirdIndex;
@@ -92,14 +92,14 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void AnimateCameraToStartPos () {
-		float duration = Vector2.Distance (Camera.main.transform.position, CameraController.startPos) / 10f; // TODO - Remove hard coded number
+		float duration = Vector2.Distance (Camera.main.transform.position, myCam.startPos) / 10f; // TODO - Remove hard coded number
 
 		if (duration == 0.0f) {
 			duration = 0.1f;
 		}
 
-		Camera.main.transform.position = Vector2.MoveTowards (Camera.main.transform.position, CameraController.startPos, cameraMovementSpeed);
-		CameraController.isFollowing = false;
+		Camera.main.transform.position = Vector2.MoveTowards (Camera.main.transform.position, myCam.startPos, cameraMovementSpeed);
+		myCam.isFollowing = false;
 		if (AllPigsAreDead ()) {
 			state = GameState.Won;
 		} else if (currentBirdIndex == birds.Count - 1) {
@@ -112,7 +112,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void SlingshotBirdThrown () {
-		CameraController.birdToFollow = birds [currentBirdIndex].transform;
-		CameraController.isFollowing = true;
+		myCam.birdToFollow = birds [currentBirdIndex].transform;
+		myCam.isFollowing = true;
 	}
 }
