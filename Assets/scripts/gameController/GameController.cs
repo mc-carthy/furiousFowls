@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,36 @@ public class GameController : MonoBehaviour {
 		bricks = new List<GameObject>(GameObject.FindGameObjectsWithTag("brick"));
 		birds = new List<GameObject>(GameObject.FindGameObjectsWithTag("bird"));
 		pigs = new List<GameObject>(GameObject.FindGameObjectsWithTag("pig"));
+	}
+
+	private void Update () {
+		switch (state) {
+		case GameState.Start:
+
+			if (Input.GetMouseButtonUp (0)) {
+				AnimateBirdToSlingshot ();
+			}
+
+			break;
+
+		case GameState.Playing:
+
+			if (slingshot.state == SlingshotState.BirdFlying && (GameObjectsStoppedMoving () || Time.time - slingshot.timeSinceThrow > 5)) {
+				slingshot.enabled = false;
+				AnimateCameraToStartPos ();
+				state = GameState.BirdMovingToSlingshot;
+			}
+
+			break;
+		case GameState.Won:
+		case GameState.Lost:
+
+			if (Input.GetMouseButtonDown (0)) {
+				SceneManager.LoadScene (SceneManager.GetActiveScene ().name, LoadSceneMode.Single);
+			}
+
+			break;
+		}
 	}
 
 	private void OnEnable () {
